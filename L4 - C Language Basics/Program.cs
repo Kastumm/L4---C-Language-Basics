@@ -5,9 +5,8 @@ namespace L4
     {
         static void Main(string[] args)
         {
-            var a = 1;
             //Hello World Program
-            var name = "Earth";
+            string name = "Earth"; // Actually a reference type, but acts like value type
             Console.WriteLine($"Hello World, We Are On Planet {name}");
 
             // Value Type
@@ -15,13 +14,6 @@ namespace L4
             p1.PlanetName = "Mercury";
             p1.PlanetType = "Unhabitable";
 
-            PassByValueRef(ref a, ref p1);
-            Console.WriteLine(a);
-            Console.WriteLine(p1.PlanetName + p1.PlanetType);
-
-            PassByValueOut(out a, out p1);
-            Console.WriteLine(a);
-            Console.WriteLine(p1.PlanetName + p1.PlanetType);
 
             Planet p2 = p1;
             p2.PlanetName = "Venus";
@@ -29,6 +21,36 @@ namespace L4
             Console.WriteLine(p2.PlanetName);
 
             CreatePlanet();
+
+            //Parameter Modifiers        
+            //Ref
+            int btcholdings = 5; //Refers to this value and modifies it.
+            btcHoldings(ref btcholdings);
+            Console.WriteLine($"BTC holdings to add: {btcholdings} BTC");
+
+
+            static void btcHoldings(ref int btcholdings)
+            {
+                btcholdings = btcholdings + 3;
+                Console.WriteLine($"Current BTC holdings: {btcholdings} BTC");
+            }
+
+            //Out
+            int btcholdingss = 5; //Refers to this value and modifies it.
+            int ethholdingss, scrtholdings;
+            btcHoldingss(btcholdingss, out ethholdingss, out scrtholdings);
+            Console.WriteLine($"BTC holdings to add: {btcholdingss} BTC");
+
+
+            static void btcHoldingss(int btcholdingss, out int ethholdings, out int scrtholdings)
+            {
+                ethholdings = 5;
+                scrtholdings = 15;
+                btcholdingss = btcholdingss + 3;
+                Console.WriteLine($"Current BTC holdings: {btcholdingss} BTC");
+            }
+
+            //
 
             //Reference Type - If we change the planet the data for this planet will change in AddDescription() as well and give us another return.
 
@@ -47,31 +69,18 @@ namespace L4
                 planet.PlanetDescription = planetDescription;
             }
 
-            //Parameter Modifiers
-
-            static void PassByValueRef(ref int a, ref Planet planet)
-            {
-                a = a + 1;
-                planet = new Planet();
-            }
-
-            static void PassByValueOut(out int a, out Planet planet)
-            {
-                a = 1;
-                planet = new Planet();
-            }
-
-
-            Planet planet = new Planet() { PlanetName = "HZ", PlanetType = "HZ2" };
-            Console.WriteLine(planet.PlanetDistance);
-
             // Boxing Unboxing
+            string[] exoplanet = new[] { "Kepler", "HZ345" };
+            object exoplanetName = exoplanet[0];
+            var getExoplanetName = (string)exoplanetName;
+            Console.WriteLine(getExoplanetName);
+
             int x = 5;
             int y = 6;
             object number = x + y;
             var num = (int)number;
             Console.WriteLine(num);
-
+            //
         }
     }
 
